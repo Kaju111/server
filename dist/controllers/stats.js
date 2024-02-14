@@ -285,7 +285,6 @@ export const getLineCharts = TryCatch(async (req, res, next) => {
         ]);
         const productCounts = getChartData({ length: 12, today, docArr: products });
         const usersCounts = getChartData({ length: 12, today, docArr: users });
-        // (orderMonthyRevenue[6 - monthDiff - 1] += parseInt(order.total));
         const discount = getChartData({
             length: 12,
             today,

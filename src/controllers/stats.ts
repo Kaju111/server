@@ -360,7 +360,7 @@ export const getBarCharts = TryCatch(async (req, res, next) => {
                 $gte: twelveMonthsAgo,
                 $lte: today,
             },
-        }).select("createdAt")
+        }).select("createdAt");
 
 
         const [
@@ -422,7 +422,6 @@ export const getLineCharts = TryCatch(async (req, res, next) => {
 
         const productCounts = getChartData({ length: 12, today, docArr: products });
         const usersCounts = getChartData({ length: 12, today, docArr: users });
-        // (orderMonthyRevenue[6 - monthDiff - 1] += parseInt(order.total));
         const discount = getChartData({
             length: 12,
             today,

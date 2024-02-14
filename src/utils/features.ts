@@ -96,35 +96,40 @@ export const getInventories = async (
 
 interface MyDocument extends Document {
     createdAt: Date;
-    discount?: number
-    total?: number
+    discount?: number | string;
+    total?: number | string;
 }
-
 type FuncProps = {
-    length: number,
-    docArr: MyDocument[],
-    today: Date,
-    property?: "discount" | "total"
-}
+    length: number;
+    docArr: MyDocument[];
+    today: Date;
+    property?: "discount" | "total";
+};
 
-export const getChartData = ({ length, docArr, today, property, }: FuncProps) => {
+
+export const getChartData = ({
+    length,
+    docArr,
+    today,
+    property,
+}: FuncProps) => {
     const data: number[] = new Array(length).fill(0);
 
     docArr.forEach((i) => {
         const creationDate = i.createdAt;
-        const monthDiff = (
-            today.getMonth() - creationDate.getMonth() + 12
-        ) % 12;
+        const monthDiff = (today.getMonth() - creationDate.getMonth() + 12) % 12;
 
         if (monthDiff < length) {
-            if (property) {
-                data[length - monthDiff - 1] += i.discount!
-
+            if (property === "discount") {
+                // Convert discount to number if it's a string
+                const discount = typeof i.discount === "string" ? parseFloat(i.discount) : i.discount;
+                data[length - monthDiff - 1] += discount || 0;
             } else {
-                data[length - monthDiff - 1] += 1
+                data[length - monthDiff - 1] += 1;
             }
         }
     });
-    return data;
-}
 
+
+    return data;
+};
